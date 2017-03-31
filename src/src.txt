@@ -1,0 +1,16 @@
+Requiere python y el instalador de paquetes de python pip
+
+Para poder tomar los datos de villagecines.com es necesario
+instalar phantomJS el cuál corre en Node.js. Agregar phantomJS
+al PATH del sistema.
+
+Instalar las librerias python necesarias
+	pip install -r requirements.txt
+
+Ejecutar 
+	./cines.py [probado con python2 y python3]
+
+El programa guarda genera una base sqlite llamada cines.db
+en el directorio donde se ejecuta el programa.
+
+

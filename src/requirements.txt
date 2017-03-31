@@ -1,0 +1,5 @@
+lxml~=3.5.0
+beautifulsoup4~=4.4.1
+requests~=2.9.1
+SQLAlchemy~=1.1.7
+selenium~=3.3.1

@@ -1,0 +1,12 @@
+dump.sql es el dump de la base de datos.
+cines.db es una base de datos SQLite3.
+
+Modelo
+
+* cinema : infomación relacionada al cine.
+* movie : información relacionada a la película.
+* genre : géneros de las películas.
+* movie_genre : tabla de asociacion de género y película.
+* showtime : representa la función de una película en un cine en una sala
+en un horario.
+
