@@ -7,6 +7,12 @@ import time
 import datetime
 import re
 
+from models.Cinema import Cinema
+from models.Genre import Genre
+from models.Movie import Movie
+from models.Showtime import Showtime
+from models.session import Session
+
 from collections import namedtuple
 from bs4 import BeautifulSoup
 from sqlalchemy import Table, Column, Integer, String, Text, ForeignKey, Float, Time, Boolean
@@ -18,7 +24,7 @@ from contextlib import closing
 from selenium.webdriver import PhantomJS # pip install selenium
 from selenium.webdriver.support.ui import WebDriverWait
 
-Base = declarative_base()
+# Base = declarative_base()
 
 def hasNumbers(inputString):
 	return bool(re.search(r'\d', inputString))
@@ -192,7 +198,7 @@ class CinemaLaPlataParser:
 						continue
 			s.commit()
 			s.close()
-
+"""
 movie_genre = Table('movie_genre', Base.metadata,
     Column('movie_id', Integer, ForeignKey('movie.id')),
     Column('genre_id', Integer, ForeignKey('genre.id'))
@@ -248,17 +254,18 @@ class Showtime(Base):
 	def __repr__(self):
 		return "<Showtime(id='%d', language='%s', room='%s')>" % (
 			self.id, self.language, self.room)
+"""
 
 def main(argv):
-	engine = create_engine('sqlite:///cines.db')
-	sessiondb = sessionmaker()
-	sessiondb.configure(bind=engine)
-	Base.metadata.create_all(engine)
+#	engine = create_engine('sqlite:///cines.db')
+#	sessiondb = sessionmaker()
+#	sessiondb.configure(bind=engine)
+#	Base.metadata.create_all(engine)
 	
-	parser = CinemaLaPlataParser(sessiondb=sessiondb)
+	parser = CinemaLaPlataParser(sessiondb=Session)
 	urls = parser.get_showtimes_urls()
 	parser.fill_db(urls_movies=urls)
-	parser2 = CinemaVillageParser(sessiondb=sessiondb)
+	parser2 = CinemaVillageParser(sessiondb=Session)
 	urls = parser2.get_showtimes_urls()
 	parser2.fill_db(urls_movies=urls)
 
