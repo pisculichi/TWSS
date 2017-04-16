@@ -99,8 +99,10 @@ class CinemaVillageParser:
 					horaries = div_sala.findAll('a', { 'class' : 'btn btn-showtime'})
 					for horary in horaries:
 						hh, mm= horary.text.split(':')
-						time = datetime.time(int(hh),int(mm))
-						showtime = Showtime(language=language, horary=time, room=room, cinema=cinema, movie=movie)
+#						time = datetime.time(int(hh),int(mm))
+						date = datetime.datetime.now()
+						date = date.replace(hour=int(hh), minute=int(mm))
+						showtime = Showtime(language=language, date=date, room=room, cinema=cinema, movie=movie)
 						s.add(showtime)
 			s.commit()
 			s.close()

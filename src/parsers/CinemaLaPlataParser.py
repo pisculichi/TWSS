@@ -89,8 +89,10 @@ class CinemaLaPlataParser:
 				for horary in horaries:
 					try:
 						hh, mm= horary.split(':')
-						time = datetime.time(int(hh),int(mm))
-						showtime = Showtime(language=language, horary=time, room=room, cinema=cinema, movie=movie)
+						#time = datetime.time(int(hh),int(mm))
+						date = datetime.datetime.now()
+						date = date.replace(hour=int(hh), minute=int(mm))
+						showtime = Showtime(language=language, date=date, room=room, cinema=cinema, movie=movie)
 						s.add(showtime)
 					except ValueError:
 						print("Error en el horario")
