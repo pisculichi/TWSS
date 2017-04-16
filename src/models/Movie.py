@@ -14,6 +14,7 @@ class Movie(Base):
 	director = Column(String(100), nullable=True)
 	duration = Column(Integer, nullable=True)
 	synopsis = Column(Text, nullable=True)
+	year = Column(Integer, nullable=True)
 	calification = Column(String(100), nullable=True)
 	distribuidory = Column(String(100), nullable=True)
 	showtimes = relationship('Showtime')
@@ -21,4 +22,4 @@ class Movie(Base):
 
 	def __repr__(self):
 		return "<Movie(id='%d', title='%s', director='%s', duration='%d', calification='%s', distribuidory='%s')>" % (
-			self.id, self.title, self.director, self.duration, self.calification, self.distribuidory)
+			self.id, self.title, self.director, self.duration if self.duration else 0, self.calification, self.distribuidory)

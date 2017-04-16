@@ -3,7 +3,10 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from models.base import Base
-from models import *
+from models.Cinema import Cinema
+from models.Genre import Genre
+from models.Movie import Movie
+from models.Showtime import Showtime
 
 engine = create_engine('sqlite:///cines.db')
 Session = sessionmaker()
