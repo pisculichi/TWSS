@@ -38,7 +38,7 @@ class ImdbParser:
 			duration = movie_html.find(attrs={'itemprop':'duration'})['datetime']
 			movie.duration = int(re.sub('[a-zA-Z]', '', duration))
 			movie.calification = movie_html.find(attrs={'itemprop':'contentRating'})['content']
-			genders = movie_html.findAll(attrs={'itemprop':'genre'})
+			genders = movie_html.findAll(attrs={'class':'itemprop', 'itemprop':'genre'})
 			for genre in genders:
 				g = genre.text
 				gen = s.query(Genre).filter(Genre.name == g).first()
