@@ -10,6 +10,7 @@ class Cinema(Base):
 	__tablename__ = 'cinema'
 	id = Column(Integer, primary_key=True)
 	name = Column(String(150), nullable=False)
+	url = Column(String(300), nullable=True)
 	showtimes = relationship('Showtime')
 
 	def __repr__(self):

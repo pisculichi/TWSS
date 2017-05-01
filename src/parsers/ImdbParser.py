@@ -35,6 +35,7 @@ class ImdbParser:
 		if movie_html:
 			s = self.sessiondb()
 			movie = s.merge(movie)
+			movie.url = url_imdb
 			duration = movie_html.find(attrs={'itemprop':'duration'})['datetime']
 			movie.duration = int(re.sub('[a-zA-Z]', '', duration))
 			movie.calification = movie_html.find(attrs={'itemprop':'contentRating'})['content']

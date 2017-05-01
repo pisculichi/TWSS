@@ -8,9 +8,14 @@ Instalar las librerias python necesarias
 	pip install -r requirements.txt
 
 Ejecutar 
-	./cines.py [probado con python2 y python3]
+	python3 cines.py
 
-El programa guarda genera una base sqlite llamada cines.db
-en el directorio donde se ejecuta el programa.
+	El programa genera una base sqlite llamada cines.db en el directorio donde se ejecuta el programa.
+
+
+	python3 cines_rdf.py
+
+	El programa genera un archivo (cines_rdf.ttl) en formato turtle en el directorio donde se ejecuta
+	el programa.
 
 

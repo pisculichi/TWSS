@@ -17,6 +17,7 @@ class Movie(Base):
 	year = Column(Integer, nullable=True)
 	calification = Column(String(100), nullable=True)
 	distribuidory = Column(String(100), nullable=True)
+	url = Column(String(300), nullable=True)
 	showtimes = relationship('Showtime')
 	genders = relationship("Genre", secondary=movie_genre, back_populates="movies")
 

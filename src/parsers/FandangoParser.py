@@ -73,11 +73,11 @@ class FandangoParser:
 				s.commit()
 			s.close()
 
-	def fill_movie_theatre(self, soup):
+	def fill_movie_theatre(self, soup, url):
 		movie_theatres = soup.findAll(attrs={'itemscope' : '', 'itemtype' : 'http://schema.org/MovieTheater'})
 		for movie_theatre in movie_theatres:
 			name = movie_theatre.find(attrs={'itemprop':'name'})['content']
-			cinema = Cinema(name=name)
+			cinema = Cinema(name=name, url=url)
 			s = self.sessiondb()
 			s.add(cinema)
 			s.commit()
@@ -88,5 +88,5 @@ class FandangoParser:
 		html = self.session.get(self.url + url_movie_theatre)
 		soup = BeautifulSoup(html.text, 'lxml')
 		self.fill_movies(soup)
-		self.fill_movie_theatre(soup)
+		self.fill_movie_theatre(soup, self.url + url_movie_theatre)
 

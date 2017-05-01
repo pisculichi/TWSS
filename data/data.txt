@@ -1,3 +1,4 @@
+cines_rdf.ttl el archivo generado por cines_rdf.py
 dump.sql es el dump de la base de datos.
 cines.db es una base de datos SQLite3.
 
