@@ -40,9 +40,12 @@ def add_genres_movie(m, genres_movie):
 def add_director(name):
 	if name not in directors_nodes:
 		director = BNode()
-		graph.add((director, RDF.type, SC.Person))
-		graph.add((director, SC.Text, Literal(name)))
-		directors_nodes[name] = director
+		graph.add((director, RDF.type, SC.director))
+		director_ = BNode()
+		graph.add((director_, SC.name, Literal(name)))
+		graph.add((director_, RDF.type, SC.Person))
+		graph.add((director, SC.director, director_))
+		directors_nodes[name] = director_
 
 def add_director_movie(m, name):
 	add_director(name)
@@ -54,7 +57,6 @@ def add_movie(movie):
 		movies_nodes[movie.url] = m
 		graph.add( (m, RDF.type, SC.Movie) )
 		add_genres_movie(m, movie.genders)
-		graph.add( (m, RDF.type, SC.Movie) )
 		graph.add( (m, SC.name, Literal(movie.title)) )
 		graph.add( (m, SC.year, Literal(movie.year)) )
 		graph.add( (m, SC.description, Literal(movie.synopsis)) )

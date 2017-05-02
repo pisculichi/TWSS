@@ -26,9 +26,14 @@ class ImdbParser:
 			year_str=''
 		resp = requests.get('http://www.omdbapi.com/?t='+movie.title+'&y='+year_str).text
 		imdb_data = json.loads(resp)
-		return self.url + 'title/' + imdb_data['imdbID']
+		if 'Error' not in imdb_data:
+			return self.url + 'title/' + imdb_data['imdbID']
+		else:
+			return None
 
 	def fill_movie(self, url_imdb, movie):
+		if url_imdb is None:
+			return
 		html = requests.get(url_imdb, headers={"Accept-Language": "en-US,en;q=0.5"})
 		soup = BeautifulSoup(html.text, 'lxml')
 		movie_html = soup.find(attrs={'itemscope' : '', 'itemtype' : 'http://schema.org/Movie'})
@@ -66,4 +71,3 @@ class ImdbParser:
 		for movie in movies:
 			url_imdb_movie = self.get_url_imdb_movie(movie)
 			self.fill_movie(url_imdb_movie, movie)
-			
