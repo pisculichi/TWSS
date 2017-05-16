@@ -3,7 +3,7 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from models.base import Base
 
-movie_genre = Table('movie_genre', Base.metadata,
+movie_actor = Table('movie_actor', Base.metadata,
     Column('movie_id', Integer, ForeignKey('movie.id')),
-    Column('genre_id', Integer, ForeignKey('genre.id'))
+    Column('actor_id', Integer, ForeignKey('actor.id'))
 )

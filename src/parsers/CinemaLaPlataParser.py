@@ -55,7 +55,7 @@ class CinemaLaPlataParser:
 			div_content = soup.find('div', {'id' : 'content'})
 			title = div_content.find('div', {'class':'post-container page-title'}).text.strip().upper()
 			title = re.sub( '\.', '', title).strip()
-			genders = re.split(', |- |/ |-' , div_content.find('span', {'id' : 'ctl00_cph_lblGenero'}).text)
+			genres = re.split(', |- |/ |-' , div_content.find('span', {'id' : 'ctl00_cph_lblGenero'}).text)
 			language = div_content.find('span', {'id' : 'ctl00_cph_lblIdioma'}).text.strip()
 			duration = div_content.find('span', {'id' : 'ctl00_cph_lblDuracion'}).text.strip().split(' ')[0]
 			if hasNumbers(duration):
@@ -69,13 +69,13 @@ class CinemaLaPlataParser:
 			movie = s.query(Movie).filter(Movie.title == title).first()
 			if not movie:
 				movie = Movie(title=title, director=director, duration=duration, synopsis=synopsis, calification=calification)
-			for genre in genders:
+			for genre in genres:
 				gen = genre.strip()
 				g = s.query(Genre).filter(Genre.name == gen).first()
 				if not g:
 					g = Genre(name=gen)
 					s.add(g)
-				movie.genders.append(g)
+				movie.genres.append(g)
 			s.add(movie)
 			div_cinemas = div_content.findAll('div', { 'class':'col-2' })
 			for div_cinema in div_cinemas:

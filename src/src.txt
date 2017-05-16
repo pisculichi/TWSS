@@ -15,7 +15,13 @@ Ejecutar
 
 	python3 cines_rdf.py
 
-	El programa genera un archivo (cines_rdf.ttl) en formato turtle en el directorio donde se ejecuta
-	el programa.
+	El programa genera un archivo (cinema-vacca.rdf) en formato xml en el directorio ../data
+	a partir de la base de datos sqlite llamada cines.db que debe encontrarse en el directorio del programa.
+
+	python3 enriquecedor.py ruta_archivo
+
+	El programa toma un archivo rdf y lo enriquece. Lo guarda en el directorio ../data con con nombre
+	enriquecido.rdf
+	
 
 

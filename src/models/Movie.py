@@ -5,6 +5,7 @@ from sqlalchemy import Table, Column, Integer, String, Text, ForeignKey, Float, 
 from sqlalchemy.orm import relationship
 from models.base import Base
 from models.movie_genre import movie_genre
+from models.movie_actor import movie_actor
 from models import Genre, Showtime
 
 class Movie(Base):
@@ -19,7 +20,8 @@ class Movie(Base):
 	distribuidory = Column(String(100), nullable=True)
 	url = Column(String(300), nullable=True)
 	showtimes = relationship('Showtime')
-	genders = relationship("Genre", secondary=movie_genre, back_populates="movies")
+	genres = relationship("Genre", secondary=movie_genre, back_populates="movies")
+	actors = relationship("Actor", secondary=movie_actor, back_populates="movies")
 
 	def __repr__(self):
 		return "<Movie(id='%d', title='%s', director='%s', duration='%d', calification='%s', distribuidory='%s')>" % (

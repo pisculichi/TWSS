@@ -38,7 +38,7 @@ class CinemaVillageParser:
 	def get_data_ficha_tecnica(self, key, ficha_tecnica):
 		regex_dict = {
 			'director' : 'Director: (.*?) Actores:',
-			'genders' : 'Género: (.*?) Director:',
+			'genres' : 'Género: (.*?) Director:',
 			'duration' : 'Duración: (.*?) Distribuidora:',
 			'distribuidory' : 'Distribuidora: (.*?)',
 			'clasification' : 'Calificación: (.*?)'
@@ -65,7 +65,7 @@ class CinemaVillageParser:
 			ficha_tecnica = re.sub( '\n+', ' ', ficha_tecnica).strip()
 			ficha_tecnica = re.sub( '\s+', ' ', ficha_tecnica).strip()
 			director = self.get_data_ficha_tecnica('director', ficha_tecnica)
-			genders = self.get_data_ficha_tecnica('genders', ficha_tecnica).split(',')
+			genres = self.get_data_ficha_tecnica('genres', ficha_tecnica).split(',')
 			duration = self.get_data_ficha_tecnica('duration', ficha_tecnica).split(' ')[0].strip()
 			calification = self.get_data_ficha_tecnica('duration', ficha_tecnica).split(' ')[0].strip()
 			if hasNumbers(duration):
@@ -77,13 +77,13 @@ class CinemaVillageParser:
 			movie = s.query(Movie).filter(Movie.title == title).first()
 			if not movie:
 				movie = Movie(title=title, director=director, duration=duration, synopsis=synopsis, calification=calification)
-			for genre in genders:
+			for genre in genres:
 				gen = genre.strip()
 				g = s.query(Genre).filter(Genre.name == gen).first()
 				if not g:
 					g = Genre(name=gen)
 					s.add(g)
-				movie.genders.append(g)
+				movie.genres.append(g)
 			s.add(movie)
 			cines = soup.findAll('div', { 'class' : 'panel panel-default' })
 			for cine in cines:

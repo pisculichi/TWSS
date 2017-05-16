@@ -8,6 +8,7 @@ import json
 
 from models.Genre import Genre
 from models.Movie import Movie
+from models.Actor import Actor
 
 from bs4 import BeautifulSoup
 
@@ -41,23 +42,48 @@ class ImdbParser:
 			s = self.sessiondb()
 			movie = s.merge(movie)
 			movie.url = url_imdb
-			duration = movie_html.find(attrs={'itemprop':'duration'})['datetime']
-			movie.duration = int(re.sub('[a-zA-Z]', '', duration))
-			movie.calification = movie_html.find(attrs={'itemprop':'contentRating'})['content']
-			genders = movie_html.findAll(attrs={'class':'itemprop', 'itemprop':'genre'})
-			for genre in genders:
+
+			duration = movie_html.find(attrs={'itemprop':'duration'})
+			if duration is not None:
+				duration = duration['datetime']
+				movie.duration = int(re.sub('[a-zA-Z]', '', duration))
+
+			calification = movie_html.find(attrs={'itemprop':'contentRating'})
+			if calification is not None:
+				movie.calification = calification['content']
+
+			genres = movie_html.findAll(attrs={'class':'itemprop', 'itemprop':'genre'})
+			for genre in genres:
 				g = genre.text
 				gen = s.query(Genre).filter(Genre.name == g).first()
 				if not gen:
 					gen = Genre(name=g)
 					s.add(gen)
-				movie.genders.append(gen)
+				movie.genres.append(gen)
+
+			actors = movie_html.findAll(attrs={'itemprop':'actors', 'itemtype': 'http://schema.org/Person' })
+			for actor in actors:
+				actor_name = actor.find(attrs={'itemprop':'name'}).text.strip()
+				a = s.query(Actor).filter(Actor.name == actor_name).first()
+				if not a:
+					a = Actor(name=actor_name)
+					s.add(a)
+				movie.actors.append(a)
+
 			director_html = movie_html.find(attrs={'itemprop' : 'director', 'itemtype' : 'http://schema.org/Person'})
-			director = director_html.find(attrs={'itemprop' : 'name'}).text.strip()
-			year = movie_html.find(attrs={'itemprop' : 'datePublished'})['content'].split('-')[0]
-			movie.director = director
-			movie.year = int(year)
-			movie.synopsis = movie_html.find(attrs={'itemprop' : 'description'}).text.strip()
+			if director_html is not None:
+				director = director_html.find(attrs={'itemprop' : 'name'}).text.strip()
+				movie.director = director
+
+			year = movie_html.find(attrs={'itemprop' : 'datePublished'})
+			if year is not None:
+				year = year['content'].split('-')[0]
+				movie.year = int(year)
+
+			synopsis = movie_html.find(attrs={'itemprop' : 'description'})
+			if synopsis is not None:
+				movie.synopsis = synopsis.text.strip()
+
 			s.commit()
 			s.close
 		else:

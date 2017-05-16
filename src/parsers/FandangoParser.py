@@ -63,7 +63,7 @@ class FandangoParser:
 			else:
 				room = "2D"
 			title = remove_year(remove_3d(title)).strip()
-			movie = s.query(Movie).filter(Movie.title == title).first()			
+			movie = s.query(Movie).filter(Movie.title == title).first()
 			dates = event.findAll(attrs={'itemprop':'startDate'})
 			for date in dates:
 				d = date['content']
